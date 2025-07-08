@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Django URL Patterns Guide</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #343a40;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .navbar h1 {
+      color: white;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .navbar .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar .nav-links a:hover {
+      background-color: #28a745;
+      padding: 6px 12px;
+      border-radius: 5px;
+    }
+
+    .watch-section {
+      max-width: 1200px;
+      margin: 20px auto 0 auto;
+      text-align: right;
+      padding: 0 20px;
+    }
+
+    .watch-button {
+      background-color: #dc3545;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .watch-button:hover {
+      background-color: #c82333;
+    }
+
+    .main-wrapper {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .container, .video-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      flex: 1 1 58%;
+      min-width: 300px;
+    }
+
+    .video-container {
+      flex: 1 1 38%;
+      min-width: 280px;
+    }
+
+    h2 {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #2c3e50;
+      margin-top: 20px;
+    }
+
+    pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: monospace;
+    }
+
+    iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar .nav-links a {
+        margin: 8px 0;
+      }
+
+      .watch-section {
+        text-align: center;
+      }
+
+      .main-wrapper {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      iframe {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Django URLs</h1>
+    <div class="nav-links">
+      <a href="../django.html">Home</a>
+      <a href="#">Docs</a>
+      <a href="#">Projects</a>
+    </div>
+  </div>
+
+
+  <!-- Main Content + Video Side by Side -->
+  <div class="main-wrapper">
+    
+    <!-- Left Side: Steps -->
+    <div class="container">
+      <h2>Step-by-Step: Django URL Patterns in App</h2>
+
+      <h3>1️⃣ Default Path</h3>
+      <p>Shows homepage or basic view.</p>
+      <pre><code>
+# blog/urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+]
+      </code></pre>
+
+      <pre><code>
+# blog/views.py
+
+def home(request):
+    return HttpResponse("This is the homepage.")
+      </code></pre>
+
+      <h3>2️⃣ Named URL</h3>
+      <p>Use <code>name</code> to reverse URLs in templates/views.</p>
+      <pre><code>
+path('about/', views.about, name='about')
+      </code></pre>
+
+      <pre><code>
+# In templates:
+&lt;a href="{% url 'about' %}"&gt;About Us&lt;/a&gt;
+      </code></pre>
+
+      <h3>3️⃣ Dynamic String Parameter</h3>
+      <p>Capture text from URL and pass it to view.</p>
+      <pre><code>
+path('user/&lt;str:username&gt;/', views.user_profile, name='profile')
+      </code></pre>
+
+      <pre><code>
+def user_profile(request, username):
+    return HttpResponse(f"Hello, {username}!")
+      </code></pre>
+
+      <h3>4️⃣ Dynamic Integer Parameter</h3>
+      <p>Capture integer from URL.</p>
+      <pre><code>
+path('post/&lt;int:id&gt;/', views.post_detail, name='post-detail')
+      </code></pre>
+
+      <pre><code>
+def post_detail(request, id):
+    return HttpResponse(f"Post ID: {id}")
+      </code></pre>
+
+      <h3>✅ Include App URLs in Project</h3>
+      <pre><code>
+# myproject/urls.py
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('blog/', include('blog.urls')),
+]
+      </code></pre>
+    </div>
+
+    <!-- Right Side: YouTube Video -->
+    <div class="video-container">
+      <h2>📺 Django URL Routing</h2>
+      <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/WfraCtCgH14?si=BbwtYCeLHQ12WTp5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <h3 style="color:red">Tutorial: Django URLs with Parameters</h3>
+        <h4 style="color:red">Notes: URL stand for UNiform resource locator </h4>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Django URLs Guide | Created by sj tech  | All rights reserved.
+  </footer>
+
+</body>
+</html>

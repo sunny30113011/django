@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Install Django - Machine & Virtual Environment</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Sticky Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #343a40;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .navbar h1 {
+      color: white;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .navbar .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar .nav-links a:hover {
+      background-color: #28a745;
+      padding: 6px 12px;
+      border-radius: 5px;
+    }
+
+    /* Watch button placed under navbar */
+    .watch-section {
+      max-width: 800px;
+      margin: 20px auto 0 auto;
+      text-align: right;
+      padding: 0 20px;
+    }
+
+    .watch-button {
+      background-color: #dc3545;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .watch-button:hover {
+      background-color: #c82333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+
+    h3 {
+      color: #2c3e50;
+    }
+
+    ol, ul {
+      padding-left: 20px;
+    }
+
+    pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: monospace;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar .nav-links {
+        flex-direction: column;
+      }
+
+      .navbar .nav-links a {
+        margin: 8px 0 0 0;
+      }
+
+      .watch-section {
+        text-align: center;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Django</h1>
+    <div class="nav-links">
+      <a href="../django.html">Home</a>
+      <a href="#">syllabus</a>
+      <a href="#">projects</a>
+    </div>
+  </div>
+
+ 
+
+  <!-- Main Content -->
+  <div class="container">
+    <h2>How to Install Django</h2>
+
+    <h3>🔧 Method 1: Install Django Globally on Your Machine</h3>
+    <ol>
+      <li>Check if Python and pip are installed:
+        <pre><code>python --version
+pip --version</code></pre>
+      </li>
+      <li>Install Django globally:
+        <pre><code>pip install django</code></pre>
+      </li>
+      <li>Verify installation:
+        <pre><code>django-admin --version</code></pre>
+      </li>
+      <li>Create your first project:
+        <pre><code>django-admin startproject myproject</code></pre>
+      </li>
+      <li>Run the development server:
+        <pre><code>cd myproject
+python manage.py runserver</code></pre>
+      </li>
+    </ol>
+
+    <h3>📦 Method 2: Install Django in a Virtual Environment</h3>
+    <ol>
+      <li>Make sure Python and pip are installed:
+        <pre><code>python --version
+pip --version</code></pre>
+      </li>
+      <li>Install <code>virtualenv</code> if not already installed:
+        <pre><code>pip install virtualenv</code></pre>
+      </li>
+      <li>Create a virtual environment:
+        <pre><code>python -m venv env</code></pre>
+      </li>
+      <li>Activate the environment:
+        <ul>
+          <li>Windows:
+            <pre><code>env\Scripts\activate</code></pre>
+          </li>
+          <li>Linux/macOS:
+            <pre><code>source env/bin/activate</code></pre>
+          </li>
+        </ul>
+      </li>
+      <li>Now install Django inside the environment:
+        <pre><code>pip install django</code></pre>
+      </li>
+      <li>Verify Django and start project:
+        <pre><code>django-admin startproject myproject</code></pre>
+      </li>
+      <li>To deactivate the virtual environment:
+        <pre><code>deactivate</code></pre>
+      </li>
+    </ol>
+
+    <p>📘 For official documentation, visit: <a href="https://www.djangoproject.com/" target="_blank">https://www.djangoproject.com</a></p>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Django Tutorial | Created by sj tech| All rights reserved.
+  </footer>
+
+</body>
+</html>

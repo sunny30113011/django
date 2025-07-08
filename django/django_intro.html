@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django Tutorial Syllabus</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background-color: #343a40;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    .navbar h1 {
+      color: white;
+      font-size: 22px;
+      margin: 0;
+    }
+
+    .navbar a {
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: #28a745;
+      border-radius: 5px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-top: 30px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    li a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 500;
+      display: block;
+      transition: 0.3s;
+    }
+
+    li a:hover {
+      background-color: #e0f7fa;
+      border-radius: 5px;
+      padding-left: 10px;
+    }
+
+    code {
+      background-color: #f1f1f1;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar a {
+        display: block;
+        width: 100%;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      li {
+        padding: 8px;
+      }
+    }
+  </style>
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Django</h1>
+    <div class="nav-links">
+      <a href="../django.html">Home</a>
+      <a href="#">syllabus</a>
+      <a href="#">projects</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h2>Django Basics</h2>
+    <ul>
+      <li><a href="django/django_intro.html">Django virtualenv</a></li>
+    </ul>
+
+    <h2>Steps to Create a Virtual Environment in Python</h2>
+    <ol>
+      <li>
+        <strong>Check Python Installation:</strong><br>
+        Open terminal or command prompt and run:<br>
+        <code>python --version</code> or <code>python3 --version</code>
+      </li>
+      <li>
+        <strong>Install virtualenv (if not already installed):</strong><br>
+        <code>pip install virtualenv</code>
+      </li>
+      <li>
+        <strong>Create a Virtual Environment:</strong><br>
+        Navigate to your project folder and run:<br>
+        <code>python -m venv env</code><br>
+        OR for Python3:<br>
+        <code>python3 -m venv env</code>
+      </li>
+      <li>
+        <strong>Activate the Virtual Environment:</strong><br>
+        <ul>
+          <li>Windows: <code>env\Scripts\activate</code></li>
+          <li>Linux/macOS: <code>source env/bin/activate</code></li>
+        </ul>
+      </li>
+      <li>
+        <strong>Install Required Packages:</strong><br>
+        <code>pip install &lt;package-name&gt;</code>
+      </li>
+      <li>
+        <strong>Deactivate the Environment:</strong><br>
+        When done, deactivate it using:<br>
+        <code>deactivate</code>
+      </li>
+    </ol>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Django Tutorial | Created by sj tech| All rights reserved.
+  </footer>
+
+</body>
+</html>
