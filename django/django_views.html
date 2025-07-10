@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Django Views - FBV & CBV</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #343a40;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .navbar h1 {
+      color: white;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .navbar .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar .nav-links a:hover {
+      background-color: #28a745;
+      padding: 6px 12px;
+      border-radius: 5px;
+    }
+
+    .main-wrapper {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .container, .video-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      flex: 1 1 58%;
+      min-width: 300px;
+    }
+
+    .video-container {
+      flex: 1 1 38%;
+      min-width: 280px;
+    }
+
+    h2 {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #2c3e50;
+      margin-top: 20px;
+    }
+
+    pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: monospace;
+    }
+
+    iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar .nav-links a {
+        margin: 8px 0;
+      }
+
+      .main-wrapper {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      iframe {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Django</h1>
+    <div class="nav-links">
+      <a href="../django.html">Home</a>
+      <a href="#">Syllabus</a>
+      <a href="#">Projects</a>
+    </div>
+  </div>
+
+  <!-- Main Content + Video Side by Side -->
+  <div class="main-wrapper">
+    
+    <!-- Left Side: Django Views -->
+    <div class="container">
+      <h2>Understanding Django Views</h2>
+
+      <p>In Django, <strong>views</strong> are the core of your application’s logic. They handle user requests and return responses like HTML pages, JSON data, or redirect instructions.</p>
+
+      <hr>
+
+      <h2>📌 Function-Based Views (FBV)</h2>
+
+      <h3>🔧 Step 1: Create a View Function</h3>
+      <pre><code># blog/views.py
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("This is a Function-Based View!")
+      </code></pre>
+
+      <h3>🔗 Step 2: Configure URL</h3>
+      <pre><code># blog/urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('fbv/', views.home, name='fbv_home'),
+]
+      </code></pre>
+
+      <h3>✅ Step 3: Include App URLs</h3>
+      <pre><code># myproject/urls.py
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('blog/', include('blog.urls')),
+]
+      </code></pre>
+
+      <p>🧪 <strong>Test:</strong> Visit <a href="http://127.0.0.1:8000/blog/fbv/" target="_blank">http://127.0.0.1:8000/blog/fbv/</a></p>
+
+      <hr>
+
+      <h2>📌 Class-Based Views (CBV)</h2>
+
+      <h3>🔧 Step 1: Create a View Class</h3>
+      <pre><code># blog/views.py
+from django.http import HttpResponse
+from django.views import View
+
+class HomeView(View):
+    def get(self, request):
+        return HttpResponse("This is a Class-Based View!")
+      </code></pre>
+
+      <h3>🔗 Step 2: Configure URL</h3>
+      <pre><code># blog/urls.py
+from django.urls import path
+from .views import HomeView
+
+urlpatterns = [
+    path('cbv/', HomeView.as_view(), name='cbv_home'),
+]
+      </code></pre>
+
+      <h3>✅ Step 3: Test the CBV</h3>
+      <pre><code>python manage.py runserver</code></pre>
+      <p>🧪 <strong>Visit:</strong> <a href="http://127.0.0.1:8000/blog/cbv/" target="_blank">http://127.0.0.1:8000/blog/cbv/</a></p>
+
+      <hr>
+
+      <h2>🧠 Summary</h2>
+      <ul>
+        <li><strong>Function-Based Views (FBV)</strong>: Simple and readable, suitable for small logic.</li>
+        <li><strong>Class-Based Views (CBV)</strong>: More scalable and reusable with built-in methods like <code>get()</code>, <code>post()</code>.</li>
+        <li>Use <code>.as_view()</code> to convert a class into a view callable.</li>
+      </ul>
+    </div>
+
+    <!-- Right Side: Video -->
+    <div class="video-container">
+      <h2>📺 FBV vs CBV in Django</h2>
+      <<iframe width="560" height="315" src="https://www.youtube.com/embed/Xjurold1bg8?si=w_5QNLkGRPvQ9_yb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <h3 style="color:red">Tutorial: Function vs Class-Based Views</h3>
+    </div>
+  </div
