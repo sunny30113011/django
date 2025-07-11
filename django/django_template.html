@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Django Project & App Creation</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #343a40;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .navbar h1 {
+      color: white;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .navbar .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .navbar .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar .nav-links a:hover {
+      background-color: #28a745;
+      padding: 6px 12px;
+      border-radius: 5px;
+    }
+
+    .main-wrapper {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .container, .video-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      flex: 1 1 58%;
+      min-width: 300px;
+    }
+
+    .video-container {
+      flex: 1 1 38%;
+      min-width: 280px;
+    }
+
+    h2 {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #2c3e50;
+      margin-top: 20px;
+    }
+
+    pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: 10px;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar .nav-links a {
+        margin: 8px 0 0 0;
+      }
+
+      .main-wrapper {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 18px;
+      }
+
+      h2, h3 {
+        font-size: 18px;
+      }
+
+      pre {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Django</h1>
+    <div class="nav-links">
+      <a href="../django.html">Home</a>
+      <a href="#">Syllabus</a>
+      <a href="#">Projects</a>
+    </div>
+  </div>
+
+  <!-- Main Content + Video Side by Side -->
+  <div class="main-wrapper">
+    
+    <!-- Left Side: Django Steps -->
+    <div class="container">
+      <h2>Step-by-Step: Create Django Project</h2>
+
+      <h3>🔧 Step 1: Install Django</h3>
+      <pre><code>pip install django</code></pre>
+
+      <h3>📁 Step 2: Create a New Project</h3>
+      <pre><code>django-admin startproject myproject</code></pre>
+
+      <h3>📂 Step 3: Navigate to Project Folder</h3>
+      <pre><code>cd myproject</code></pre>
+
+      <h3>🚀 Step 4: Run Development Server</h3>
+      <pre><code>python manage.py runserver</code></pre>
+
+      <h3>✅ Done</h3>
+      <p>Open browser: <a href="http://127.0.0.1:8000" target="_blank">http://127.0.0.1:8000</a></p>
+
+      <hr>
+
+      <h2>Step-by-Step: Create Django App</h2>
+
+      <h3>🔨 Step 1: Create App</h3>
+      <pre><code>python manage.py startapp blog</code></pre>
+
+      <h3>📝 Step 2: Register in settings.py</h3>
+      <pre><code>'blog',</code></pre>
+
+      <h3>👁️ Step 3: Create View</h3>
+      <pre><code>
+from django.http import HttpResponse
+
+def homepage(request):
+    return HttpResponse("Welcome to Blog App!")
+      </code></pre>
+
+      <h3>🌐 Step 4: Create blog/urls.py</h3>
+      <pre><code>
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.homepage, name='homepage'),
+]
+      </code></pre>
+
+      <h3>🔗 Step 5: Include App URLs</h3>
+      <pre><code>
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('blog/', include('blog.urls')),
+]
+      </code></pre>
+
+      <h3>✅ Step 6: Run & Test</h3>
+      <pre><code>python manage.py runserver</code></pre>
+      <p>Visit: <a href="http://127.0.0.1:8000/blog/" target="_blank">http://127.0.0.1:8000/blog/</a></p>
+
+      <hr>
+
+      <h2>Step-by-Step: Django Templates (Project-Level)</h2>
+
+      <h3>📁 Step 1: Create a Global Templates Folder</h3>
+      <pre><code>
+myproject/
+├── myproject/
+│   ├── settings.py
+├── blog/
+├── templates/
+│   └── home.html
+├── manage.py
+      </code></pre>
+
+      <h3>📄 Step 2: Create home.html in templates/</h3>
+      <pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;This is a Template from Project Root&lt;/h1&gt;
+  &lt;p&gt;Welcome to Django Templates Tutorial&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </code></pre>
+
+      <h3>⚙️ Step 3: Configure settings.py</h3>
+      <pre><code>
+import os
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+      </code></pre>
+
+      <h3>👁️ Step 4: Create View in blog/views.py</h3>
+      <pre><code>
+from django.shortcuts import render
+
+def homepage(request):
+    return render(request, 'home.html')
+      </code></pre>
+
+      <h3>🔗 Step 5: blog/urls.py</h3>
+      <pre><code>
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.homepage, name='homepage'),
+]
+      </code></pre>
+
+      <h3>🌐 Step 6: Include App URLs in myproject/urls.py</h3>
+      <pre><code>
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('blog.urls')),
+]
+      </code></pre>
+
+      <h3>✅ Step 7: Run & Test</h3>
+      <pre><code>python manage.py runserver</code></pre>
+      <p>Visit: <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a></p>
+
+      <h3>🧠 Step 8: Optional - Pass Data to Template</h3>
+      <pre><code>
+def homepage(request):
+    return render(request, 'home.html', {'title': 'My Django Site'})
+      </code></pre>
+
+      <h3>📄 Use Variable in home.html</h3>
+      <pre><code>
+&lt;h1&gt;Welcome to {{ title }}&lt;/h1&gt;
+      </code></pre>
+
+    </div>
+
+    <!-- Right Side: YouTube Video -->
+    <div class="video-container">
+      <h2>📺 Django Project & App</h2>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/oTNKV5d8myE?si=8mQ6iV9UwEAb1GG9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <h3 style="color:red">Tutorial: How to Create Django Project & App</h3>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Django Tutorial | Created by sjtech | All rights reserved.
+  </footer>
+
+</body>
+</html>
