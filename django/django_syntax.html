@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Django Template Tags and Filters</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #343a40;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .navbar h1 {
+      color: white;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .navbar .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .navbar .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar .nav-links a:hover {
+      background-color: #28a745;
+      padding: 6px 12px;
+      border-radius: 5px;
+    }
+
+    .main-wrapper {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .container, .video-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      flex: 1 1 58%;
+      min-width: 300px;
+    }
+
+    .video-container {
+      flex: 1 1 38%;
+      min-width: 280px;
+    }
+
+    h2 {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #2c3e50;
+      margin-top: 20px;
+    }
+
+    li {
+      margin-bottom: 5px;
+      padding: 4px;
+      list-style: square;
+    }
+
+    pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar .nav-links a {
+        margin: 8px 0 0 0;
+      }
+
+      .main-wrapper {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 18px;
+      }
+
+      h2, h3 {
+        font-size: 18px;
+      }
+
+      pre {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Django Template Tags Demo</h1>
+    <div class="nav-links">
+      <a href="{% url 'index' %}">Home</a>
+      <a href="{% url 'njdnj' %}">About</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-wrapper">
+
+    <div class="container">
+      <h2>🔁 For Loop with First & Last</h2>
+
+      <ul>
+        {% for x in lang %}
+          <li
+            {% if forloop.first %}style="background-color: brown;"{% endif %}
+            {% if forloop.last %}style="color: rgb(25, 17, 184);"{% endif %}
+          >
+            {{ forloop.revcounter0 }} - {{ x }}
+          </li>
+        {% endfor %}
+      </ul>
+
+      <h3>💬 Comment Tag Example</h3>
+      {% comment "developer sjtech" %}
+        <h2> welcome </h2>
+      {% endcomment %}
+      <p>Comment block hidden in source code.</p>
+
+      <h2>🔄 Reversed Loop with Upper Filter</h2>
+      <ul>
+        {% for x in lang reversed %}
+          {% filter upper %}
+            <li>{{ x }}</li>
+          {% endfilter %}
+        {% endfor %}
+      </ul>
+
+      <h2>🔤 Lowercase Filter</h2>
+      {% filter lower %}
+        <p>SUNNY WAGHMODE</p>
+      {% endfilter %}
+
+      <h2>🎲 Random Filter</h2>
+      <p>Random item: <strong>{{ lang | random }}</strong></p>
+
+      <h2>🎨 Cycle Tag</h2>
+      <ul>
+        {% for x in lang %}
+          <li style="color: {% cycle 'red' 'blue' 'pink' 'black' %};">
+            {{ x }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Optional Video Sidebar -->
+    <div class="video-container">
+      <h2>🎥 Related Tutorial</h2>
+     <iframe width="560" height="315" src="https://www.youtube.com/embed/iw6ZGmiYFFo?si=G8UAs1c7LW2O000N" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> <h3 style="color:red">Learn More About Template Features</h3>
+    </div>
+
+
+     <div class="video-container">
+      <h2>🎥 Related Tutorial</h2>
+     <iframe width="560" height="315" src="https://www.youtube.com/embed/exKsbSSX9os?si=2qj60QhXRtrjHzKt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> </div>
+
+  </div>
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Django Tags Demo | Created by sjtech | All rights reserved.
+  </footer>
+
+</body>
+</html>
