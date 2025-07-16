@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Django Template Inheritance</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #343a40;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .navbar h1 {
+      color: white;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .navbar .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar .nav-links a:hover {
+      background-color: #28a745;
+      padding: 6px 12px;
+      border-radius: 5px;
+    }
+
+    .main-wrapper {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .container, .video-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      flex: 1 1 58%;
+      min-width: 300px;
+    }
+
+    .video-container {
+      flex: 1 1 38%;
+      min-width: 280px;
+    }
+
+    h2 {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #2c3e50;
+      margin-top: 20px;
+    }
+
+    pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: monospace;
+    }
+
+    iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar .nav-links a {
+        margin: 8px 0;
+      }
+
+      .main-wrapper {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      iframe {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Django</h1>
+    <div class="nav-links">
+      <a href="../django.html">Home</a>
+      <a href="#">Syllabus</a>
+      <a href="#">Projects</a>
+      <a href="#inheritance">Templates</a>
+    </div>
+  </div>
+
+  <!-- Main Content + Video Side by Side -->
+  <div class="main-wrapper">
+
+    <!-- Left Content -->
+    <div class="container">
+      <h2 id="inheritance">🧱 Django Template Inheritance</h2>
+      <p>Template Inheritance in Django lets you reuse base HTML structures across multiple pages. It promotes clean, maintainable code.</p>
+
+      <h3>📁 Step 1: Create <code>base.html</code></h3>
+      <pre><code>{# blog/templates/blog/base.html #}
+<p><code>!DOCTYPE html>
+html>
+head>
+  title>{% block title %}My Site{% endblock %}</title>
+/head>
+body>
+  h1>My Blog Layout</h1>
+  div class="content">
+    {% block content %}{% endblock %}
+  /div>
+</body>
+/html></code></p></code></pre>
+
+      <h3>📄 Step 2: Create <code>home.html</code></h3>
+      <pre><code>{% extends "blog/base.html" %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+  &lt;h2&gt;Welcome to the Home Page!&lt;/h2&gt;
+  &lt;p&gt;This content is injected into the base template.&lt;/p&gt;
+{% endblock %}</code></pre>
+
+      <h3>🧠 Step 3: Create a View</h3>
+      <pre><code># blog/views.py
+from django.shortcuts import render
+
+def template_inherit(request):
+    return render(request, 'blog/home.html')</code></pre>
+
+      <h3>🔗 Step 4: Add to URLs</h3>
+      <pre><code># blog/urls.py
+from django.urls import path
+from .views import template_inherit
+
+urlpatterns = [
+    path('inherit/', template_inherit, name='template_inherit'),
+]</code></pre>
+
+      <h3>✅ Step 5: Run and Visit</h3>
+      <pre><code>python manage.py runserver</code></pre>
+      <p>🧪 <strong>Visit:</strong> <a href="http://127.0.0.1:8000/blog/inherit/" target="_blank">http://127.0.0.1:8000/blog/inherit/</a></p>
+
+      <hr>
+
+      <h2>🔍 Summary</h2>
+      <ul>
+        <li><strong>base.html</strong> defines the layout and reusable blocks.</li>
+        <li>Use <code>{% extends %}</code> in child templates to inherit structure.</li>
+        <li>Use <code>{% block %}</code> to insert custom content.</li>
+      </ul>
+    </div>
+
+    <!-- Right: Video Content -->
+    <div class="video-container">
+      <h2>📺 Django Template Inheritance</h2>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/AVoguRzr_u0?si=n1wUQdMsbPsoEnLR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <h3 style="color:red">Tutorial: Template Inheritance in Django</h3>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Django Learning | All rights reserved.
+  </footer>
+
+</body>
+</html>
