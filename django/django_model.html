@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Django Model & Admin Tutorial</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #343a40;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+    .navbar h1 {
+      color: white;
+      font-size: 20px;
+      margin: 0;
+    }
+    .navbar .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .navbar .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+    .navbar .nav-links a:hover {
+      background-color: #28a745;
+      padding: 6px 12px;
+      border-radius: 5px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    h3 {
+      color: #2c3e50;
+      margin-top: 25px;
+    }
+    pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    code {
+      font-family: monospace;
+      font-size: 14px;
+    }
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <h1>Django Model with Admin Demo</h1>
+  <div class="nav-links">
+    <a href="{% url 'index' %}">Home</a>
+    <a href="{% url 'about' %}">About</a>
+  </div>
+</div>
+
+<div class="container">
+  <h2>📦 Django Model Example</h2>
+  <h3>models.py</h3>
+  <pre><code>
+from django.db import models
+
+class Student(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    course = models.CharField(max_length=100)
+    email = models.EmailField()
+    join_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.course})"
+  </code></pre>
+
+  <h3>✅ Explanation:</h3>
+  <ul>
+    <li><strong>CharField, EmailField, IntegerField:</strong> Basic field types</li>
+    <li><strong>auto_now_add:</strong> Automatically adds the current date</li>
+    <li><strong>__str__:</strong> Custom string representation in admin</li>
+  </ul>
+
+  <h2>🛠️ Register Model in Admin</h2>
+  <h3>admin.py</h3>
+  <pre><code>
+from django.contrib import admin
+from .models import Student
+
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'age', 'course', 'email', 'join_date')
+    search_fields = ('name', 'course')
+    list_filter = ('course',)
+
+admin.site.register(Student, StudentAdmin)
+  </code></pre>
+
+  <h3>✅ Explanation:</h3>
+  <ul>
+    <li><strong>list_display:</strong> Shows selected fields in admin list</li>
+    <li><strong>search_fields:</strong> Search bar in admin</li>
+    <li><strong>list_filter:</strong> Filter data by field</li>
+  </ul>
+
+  <h2>🔎 Get All Students</h2>
+  <h3>views.py</h3>
+  <pre><code>
+from django.shortcuts import render
+from .models import Student
+
+def student_list(request):
+    students = Student.objects.all()
+    return render(request, 'students.html', {'students': students})
+  </code></pre>
+
+  <h2>📄 students.html (Template)</h2>
+  <pre><code>
+{% extends 'base.html' %}
+{% block content %}
+  &lt;h2&gt;📋 Student Records&lt;/h2&gt;
+  &lt;ul&gt;
+    {% for student in students %}
+      &lt;li&gt;
+        {{ student.name }} - {{ student.course }} - {{ student.email }}
+      &lt;/li&gt;
+    {% endfor %}
+  &lt;/ul&gt;
+{% endblock %}
+  </code></pre>
+
+  <h2>📁 Final Directory Structure</h2>
+  <pre><code>
+  myproject/
+  ├── app/
+  │   ├── models.py
+  │   ├── admin.py
+  │   ├── views.py
+  │   ├── templates/
+  │   │   └── students.html
+  │   └── urls.py
+  ├── manage.py
+  └── db.sqlite3
+  </code></pre>
+
+</div>
+ <!-- Optional Video Sidebar -->
+    <div class="video-container">
+      <h2>🎥 Related Tutorial</h2>
+    
+    
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/MRrL9u3-jHE?si=PHoqNNuZZQieR3bm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/t_rZhm1WlpE?si=J3HvqqBItQl1JIMk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  
+    </div>
+
+
+     
+<footer>
+  &copy; 2025 Django Model Tutorial | Created by sjtech | All rights reserved.
+</footer>
+
+</body>
+</html>
