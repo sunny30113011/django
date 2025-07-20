@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Django Image Upload Tutorial</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #343a40;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .navbar h1 {
+      color: white;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .navbar .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .navbar .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .navbar .nav-links a:hover {
+      background-color: #28a745;
+      padding: 6px 12px;
+      border-radius: 5px;
+    }
+
+    .main-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .container, .video-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #2c3e50;
+      margin-top: 20px;
+    }
+
+    pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: 10px;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar .nav-links a {
+        margin: 8px 0 0 0;
+      }
+
+      .main-wrapper {
+        padding: 10px;
+      }
+
+      h1, h2, h3 {
+        font-size: 18px;
+      }
+
+      pre {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Django Templates Inside App</h1>
+    <div class="nav-links">
+      <a href="../django.html">Home</a>
+      <a href="#">Syllabus</a>
+      <a href="#">Projects</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-wrapper">
+    
+    <!-- Step-by-step Instructions -->
+    <div class="container">
+      <h2>Step-by-Step: Display Uploaded Images in Django</h2>
+
+      <h3>🚀 Step 1: Create a Django Project</h3>
+      <pre><code>django-admin startproject footwearproject .</code></pre>
+
+      <h3>📁 Step 2: Create an App</h3>
+      <pre><code>
+python manage.py startapp footwearapp </code></pre>
+
+      <h3>🛠️ Step 3: Register App in settings.py</h3>
+      <pre><code>
+INSTALLED_APPS = [
+    ...
+    'footwearapp',
+]
+</code></pre>
+
+      <h3>🌐 Step 4: Create Project Level URLs in <code>footwearproject/urls.py</code></h3>
+      <pre><code>
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('footwearapp.urls')),
+]
+ if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+</code></pre>
+
+      <h3>🔗 Step 5: Create App Level URLs <code>footwearapp/urls.py</code></h3>
+      <pre><code>
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+</code></pre>
+
+      <h3>📦 Step 6: Create Model in <code>footwearapp/models.py</code></h3>
+      <pre><code>
+from django.db import models
+
+class Product(models.Model):
+    pname = models.CharField(max_length=100)
+    pdescription = models.TextField()
+    prize = models.DecimalField(max_digits=8, decimal_places=2)
+    image = models.ImageField(upload_to='product_images/')
+
+    def __str__(self):
+        return self.pname
+</code></pre>
+
+      <h3>📥 Step 7: Makemigrations and Migrate</h3>
+      <pre><code>
+python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+
+      <h3>✅ Step 8: Register Model in <code>footwearapp/admin.py</code></h3>
+      <pre><code>
+from django.contrib import admin
+from .models import Product
+
+admin.site.register(Product)
+</code></pre>
+
+      <h3>👁️ Step 9: Create View in <code>footwearapp/views.py</code></h3>
+      <pre><code>
+from django.shortcuts import render
+from .models import Product
+
+def index(request):
+    products = Product.objects.all()
+    return render(request, 'products/index.html', {'products': products})
+</code></pre>
+
+      <h3>🧾 Step 10: Create Template <code>footwearapp/templates/footwearapp/index.html</code></h3>
+      <pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Product Gallery&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Uploaded Products&lt;/h1&gt;
+  {% for product in products %}
+    &lt;div style="border:1px solid #ddd; padding:10px; margin:10px;"&gt;
+      &lt;h3&gt;{{ product.pname }} - ₹{{ product.prize }}&lt;/h3&gt;
+      &lt;p&gt;{{ product.pdescription }}&lt;/p&gt;
+      &lt;img src="{{ product.image.url }}" width="300"/&gt;
+    &lt;/div&gt;
+  {% endfor %}
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+      <h3>⚙️ Step 11: Add Media Settings in <code>settings.py</code></h3>
+      <pre><code>
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+</code></pre>
+
+      <h3>🔗 Step 12: Add Product Data via Admin Site</h3>
+      <pre><code>
+python manage.py createsuperuser
+# Then login at /admin and add product entries with images
+</code></pre>
+
+      <h3>🖥️ Step 13: Run Project</h3>
+      <pre><code>
+python manage.py runserver
+</code></pre>
+      <p>Visit: <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a></p>
+    </div>
+
+    <!-- Video Tutorial Section -->
+    <div class="video-container">
+      <h2>📺 Django Image Upload Tutorial</h2>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/z1MW1_nP8hw?si=csqXhgsAatxj7SeE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <h3 style="color:red">Tutorial: Upload and Display Images in Django</h3>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Django Tutorial | Created by sjtech | All rights reserved.
+  </footer>
+
+</body>
+</html>
